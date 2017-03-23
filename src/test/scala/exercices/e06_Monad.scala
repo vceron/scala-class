@@ -30,7 +30,7 @@ class e06_Monad extends HandsOnSuite {
     val speakerNumber: Future[Int] = for {
       speaker <- DevoxxApi.getSpeaker("09a79f4e4592cf77e5ebf0965489e6c7ec0438cd")
       talk <- DevoxxApi.getTalk(speaker.acceptedTalks.get.head.id)
-    } yield ???
+    } yield talk.speakers.size
 
     val speakerNumberValue = await(speakerNumber)
     speakerNumberValue shouldBe 3
