@@ -30,10 +30,10 @@ class e04_Try extends HandsOnSuite {
     }.map(lines => lines.size)
 
     // L'opération s'est déroulée avec succès ?
-     __ shouldBe true
+    linesCount.isSuccess shouldBe true
 
     // README.md contient combien de ligne ?
-    __ shouldBe 22
+    linesCount.get shouldBe 22
 
     // Pattern matching: retournez le nombre de lignes si c'est ok sinon 0
     val count: Int = linesCount match {
@@ -51,7 +51,7 @@ class e04_Try extends HandsOnSuite {
     }.map(lines => lines.size)
 
     // Sachant que le fichier TOTO.txt n'existe pas, l'opération sera un Success ou une Failure ?
-    __ shouldBe true
-    linesCount.recover { case _ => 0 } shouldBe __
+    linesCount.isFailure shouldBe true
+    linesCount.recover { case _ => 0 } shouldBe 0
   }
 }
