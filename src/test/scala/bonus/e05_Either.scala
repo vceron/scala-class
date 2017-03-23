@@ -28,14 +28,14 @@ class e05_Either extends HandsOnSuite {
     val speaker = getSpeaker("1693d28c079e6c28269b9aa86ae04a4549ad3074")
 
     // Sachant que le résultat de l'appel est ok, le speaker est à droit ou à gauche?
-    speaker.isRight shouldBe __
-    speaker.isLeft shouldBe __
+    speaker.isRight shouldBe true
+    speaker.isLeft shouldBe false
 
     //map peut être appliqué  à droit ou à gauche du Either
     val speakerName: Either[MalformedURLException, String] = speaker.right.map(speaker => speaker.firstName)
 
     //Depuis la variable speakerName , récupérez le nom du speaker
-    __ shouldBe "Fabrice"
+    speakerName.right.get shouldBe "Fabrice"
   }
 
 
@@ -43,8 +43,8 @@ class e05_Either extends HandsOnSuite {
     val speaker = getSpeaker("toto")
 
     // Sachant que le speaker toto n'existe pas, le speaker est à droit ou à gauche?
-    speaker.isRight shouldBe __
-    speaker.isLeft shouldBe __
+    speaker.isRight shouldBe false
+    speaker.isLeft shouldBe true
   }
 
   /**
@@ -58,7 +58,7 @@ class e05_Either extends HandsOnSuite {
       speaker2.right.map(speaker2 => speaker1.company eq speaker2.company)
     )
 
-    __ shouldBe false
+    sameCompany.right.get shouldBe false
   }
 
 
