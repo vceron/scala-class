@@ -293,9 +293,17 @@ class e03_collections extends HandsOnSuite {
     val talkTitle = "Scala class, bien démarrer avec Scala"
     val speakerId = "09a79f4e4592cf77e5ebf0965489e6c7ec0438cd"
 
-    def frenchPercentageOfTalks(): Int = ???
-    def fetchSpeakerTalks(id: SpeakerId): List[Talk] = ???
-    def roomSchedule(id: RoomId): List[(Long, Long, TalkId)] = ???
+    def frenchPercentageOfTalks(): Int = talks.count(_.lang == "fr") * 100 / talks.length
+
+    def fetchSpeakerTalks(id: SpeakerId): List[Talk] = {
+      speakers
+        .find(_.uuid.toString == speakerId).get.acceptedTalks.get.map(a => talks.find(_.id == a.id).get)
+    }
+    def roomSchedule(id: RoomId): List[(Long, Long, TalkId)] = {
+      slots
+        .filter(_.roomId == id)
+        .map(x => (x.fromTimeMillis, x.toTimeMillis, x.talk.get.id))
+    }
 
     exercice("fetch") {
       frenchPercentageOfTalks() shouldBe 90
